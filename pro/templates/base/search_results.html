@@ -1,0 +1,40 @@
+{% extends 'base.html'%} {% block content %} {{block.super}}
+<i class="fa fa-instagram" aria-hidden="true"></i>
+<div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+        {% if found_users %}
+        <h4>Found {{ found_users|length }} users with the name {{message}}</h2>
+            {% else %}
+            <h4> OOO0P! 0 users named {{message}}</h2>
+                {% endif %}
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+</div>
+
+<div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 col-xl-10">
+        <div class="row">
+            {% if found_users %} {% for found_user in found_users %}
+            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
+
+                <a href="{% url 'view_profile' found_user.id %}">
+                    <img src="{{found_user.profile_pic.url}}" class="img-responsive" alt='Image'>
+                </a>
+                {% if found_user.user_type == '1' %}
+                    <h5>Dr.&nbsp;{{found_user.name}} &nbsp;&nbsp; {{found_user.hospital}}&nbsp;Hospital</h5>
+                    <a href="{% url 'book_appointment' found_user.id %}">Book an Appointment with Dr.{{found_user.name}}</a>
+                {% else %}
+                    <h5>{{found_user.name}} &nbsp;&nbsp; {{found_user.location}}</h5>
+                    <a href="{% url 'book_appointment' found_user.id %}">Book an Appointment with {{found_user.name}} &nbsp; | &nbsp;Patient</a>
+                {% endif %}
+            </div>
+            {% endfor %} {% endif %}
+
+        </div>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 col-xl-1"></div>
+
+</div>
+{% endblock %}
